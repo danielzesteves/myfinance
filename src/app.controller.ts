@@ -13,15 +13,10 @@ export class AppController {
     return this.appService.getHello();
   }
 
-/*  @UseGuards(LocalAuthGuard)
+  @UseGuards(LocalAuthGuard)
   @Post('auth/login')
   async login(@Request() req) {
     return this.authService.login(req.user);
   }
 
-  @UseGuards(JwtAuthGuard)
-  @Get('validar-token')
-  getProfile(@Request() req) {
-    return req.user;
-  }*/
 }

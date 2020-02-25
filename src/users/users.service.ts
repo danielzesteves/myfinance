@@ -1,9 +1,10 @@
 
 import { Injectable } from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';
-import { User } from './interfaces/user.interfaces';
+
 import {CreateUserDTO} from './dto/create-user.dto';
 import { Model } from 'mongoose';
+import { User } from './classes/user.classes';
 @Injectable()
 export class UsersService {
   private readonly users: User[];
@@ -12,7 +13,10 @@ export class UsersService {
     return this.userModel.find().exec();
   }
 
-  async findOne(username: string): Promise<User> {
-    return this.userModel.find().exe();
+  async findOne(firstName: string): Promise<User> {
+    const resultado = this.userModel.where({firstName}).findOne((err, result) =>{
+      return result;
+    });
+    return resultado;
   }
 }
