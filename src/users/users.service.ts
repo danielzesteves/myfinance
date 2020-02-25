@@ -4,6 +4,7 @@ import { InjectModel } from '@nestjs/mongoose';
 import {IUser} from './interfaces/iuser.interfaces';
 import {CreateUserDTO} from './dto/create-user.dto';
 import { Model } from 'mongoose';
+import { User } from './classes/user.classes';
 
 @Injectable()
 export class UsersService {
@@ -12,10 +13,12 @@ export class UsersService {
     return this.userModel.find().exec();
   }
 
-  async findOne(firstName: string): Promise<IUser> {
-    const resultado = this.userModel.where({firstName}).findOne((err, result) => {
-      return result;
+  async findOne({ username, password }: { username: string; password: string; }): Promise<User> {
+    return this.userModel.findOne({username, password})
+                        .select('_id firstName lastName email username')
+                        .then((result) =>  {
+      const user: User = result._doc;
+      return user;
     });
-    return resultado;
   }
 }
